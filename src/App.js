@@ -1,34 +1,48 @@
 import logo from './logo.svg';
 import './App.css';
 import './CSS/App.css';
+import CustomNavbar from './Components/CustomNavbar';
+import MemoryCard from './Components/MemoryCard';
+import { Col, Container, Row } from 'react-bootstrap';
 
+//setup vars
+const memories = [
+  {
+    title: 'Title',
+    author: 'Author',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/91DNhLLmUOL._AC_UL200_SR200,200_.jpg'
+  }, {
+    title: 'Title2',
+    author: 'Author2',
+    image: 'https://images-na.ssl-images-amazon.com/images/I/91DNhLLmUOL._AC_UL200_SR200,200_.jpg'
+  }
+];
 function MemoryList() {
   return (
-    <section className="memorylist">
-      <Memory />
-      <Memory />
-      <Memory />
-      <Memory />
-      <Memory />
-      <Memory />
-    </section>
+    <Container>
+      <Row xs={1} md={3}>
+        {memories.map((memory) => {return <Col><MemoryCard memory={memory} /></Col>})} 
+      </Row>
+    </Container>
+    // <section className="memorylist">
+
+    // </section>
   );
 }
-const Memory = () => {
-  return <article className="memory">
-    <Image />
-    <Title />
-    <Author />
-  </article>
-}
-
-const Image = () => (<img src="https://images-na.ssl-images-amazon.com/images/I/91DNhLLmUOL._AC_UL200_SR200,200_.jpg" alt="" />)
-
-const Title = () => (<h1>Title</h1>)
-const Author = () => (<h4 style={{ color: '#617d98', fontSize: '0.75rem', marginTop: '0.25rem' }}>Author</h4>)
+// const Memory = (props) => {
+//   return <MemoryCard memory=
+//   return <article className="memory">
+//     <img src={props.memory.image} alt="" />
+//     <h1>{props.memory.title}</h1>
+//     <h4 style={{ color: '#617d98', fontSize: '0.75rem', marginTop: '0.25rem' }}></h4>
+//   </article>
+// }
 
 function App() {
-  return <MemoryList />
+  return <main>
+    <CustomNavbar />
+    <MemoryList />
+  </main>
 }
 
 export default App;
