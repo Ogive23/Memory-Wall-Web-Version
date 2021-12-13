@@ -4,7 +4,9 @@ import './CSS/App.css';
 import CustomNavbar from './Components/CustomNavbar';
 import MemoryCard from './Components/MemoryCard';
 import { Col, Container, Row } from 'react-bootstrap';
-
+import { Fab, } from '@mui/material';
+import NavigationIcon from '@mui/icons-material/Navigation';
+import Box from '@mui/material/Box';
 //setup vars
 const memories = [
   {
@@ -21,8 +23,14 @@ function MemoryList() {
   return (
     <Container>
       <Row xs={1} md={3}>
-        {memories.map((memory) => {return <Col><MemoryCard memory={memory} /></Col>})} 
+        {memories.map((memory) => { return <Col><MemoryCard memory={memory} /></Col> })}
       </Row>
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+        <Fab variant="extended" style={{ right: 20, position: 'fixed' }}>
+          <NavigationIcon sx={{ mr: 1 }} />
+          Navigate
+        </Fab>
+      </Box>
     </Container>
     // <section className="memorylist">
 
