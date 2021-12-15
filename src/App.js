@@ -49,7 +49,7 @@ function MemoryList() {
 function App() {
   return <main>
     <CustomNavbar />
-    <MemoryList />
+    {/* <MemoryList /> */}
   </main>
 }
 
