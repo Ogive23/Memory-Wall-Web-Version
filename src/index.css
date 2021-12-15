@@ -5,11 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
   height: 100vh;
   width: 100vw;
-  background: url('./Assets/Images/candle-glass-5k.jpg');
   background-position: center;
+  /* background: black !important;  */
+  /* background-color: black; */
+  background: url('./Assets/Images/candle-glass-5k.jpg');
+}
+#root{
+  height: 100vh;
+}
+#main{
+  height: 100vh;
 }
 
 code {
