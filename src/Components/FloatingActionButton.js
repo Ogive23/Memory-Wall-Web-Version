@@ -1,32 +1,33 @@
 import React, { Component } from 'react'
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
+import AddIcon from '@mui/icons-material/Add';
+import MenuIcon from '@mui/icons-material/Menu';
+import ReportIcon from '@mui/icons-material/Report'; import ChatIcon from '@mui/icons-material/Chat';
+import { onAddMemoryActionClicked, onChatActionClicked, onReportActionClicked } from '../Hooks/FloatingActionButtonsHooks';
 
 const actions = [
-    { icon: <FileCopyIcon />, name: 'Copy' },
-    { icon: <SaveIcon />, name: 'Save' },
-    { icon: <PrintIcon />, name: 'Print' },
-    { icon: <ShareIcon />, name: 'Share' },
+    { icon: <AddIcon />, name: 'Add Memory', color: 'blue', onClicked: onAddMemoryActionClicked },
+    { icon: <ReportIcon />, name: 'Report Error', color: 'red', onClicked: onReportActionClicked },
+    { icon: <ChatIcon />, name: 'Talk to us', color: 'green', onClicked: onChatActionClicked },
 ];
+
 export class FloatingActionButton extends Component {
     render() {
         return (<Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }} style={{ right: 20, bottom: 20, position: 'fixed' }}>
             <SpeedDial
                 ariaLabel="SpeedDial basic example"
                 sx={{ position: 'absolute', bottom: 16, right: 16 }}
-                icon={<SpeedDialIcon />}
+                icon={<MenuIcon />}
             >
-                {actions.map((action) => (
+                {actions.reverse().map((action) => (
                     <SpeedDialAction
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
+                        color={action.color}
+                        onClick={action.onClicked}
                     />
                 ))}
             </SpeedDial>
