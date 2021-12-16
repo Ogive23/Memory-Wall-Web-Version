@@ -23,12 +23,12 @@ export class MemoryCard extends Component {
             <Card sx={{ maxWidth: 345 }} style={{  }}>
                 <CardHeader
                     avatar={
-                        <Avatar alt={memory.createdBy.name} src={memory.createdBy.image ?? '#'} />
+                        <Avatar alt={memory.author.name} src={memory.author.image ?? '#'} />
                     }
                     action={
                         <MemoryCardSettingsButton />
                     }
-                    title={memory.createdBy.name}
+                    title={memory.author.name}
                     subheader={memory.createdOn}
                 />
                 <CardMedia
