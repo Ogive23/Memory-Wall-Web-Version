@@ -30,3 +30,14 @@ body{
 .memory h1{
     margin-top: 0.5rem;
 }
+.carousel {
+    /* width:900px; */
+    height:500px;
+    margin: auto;
+  }
+  .carousel-inner{
+      height:100%
+  }
+  .active {
+      height: 100%;
+  }
