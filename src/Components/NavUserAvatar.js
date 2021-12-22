@@ -82,7 +82,9 @@ export default function NavUserAvatar() {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={()=>{
+                    localStorage.clear();
+                }}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

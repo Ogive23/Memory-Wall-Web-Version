@@ -11,16 +11,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Badge, Button } from '@mui/material';
 import MemoryCardSettingsButton from './MemoryCardSettingsButton';
-
 export class MemoryCard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { memory } = this.props;
         return (
-            <Card sx={{ maxWidth: 345 }} style={{  }}>
+            <Card sx={{ maxWidth: 345 }}>
                 <CardHeader
                     avatar={
                         <Avatar alt={memory.author.name} src={memory.author.image ?? '#'} />
