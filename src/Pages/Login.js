@@ -8,10 +8,11 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
+  FormHelperText,
   Link,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -27,7 +28,9 @@ import axios from "axios";
 export const LoginPage = () => {
   const [values, setValues] = useState({
     email: "",
+    emailValidationError: null,
     password: "",
+    passwordValidationError: null,
     error: null,
     rememberMe: false,
     showPassword: false,
@@ -36,6 +39,22 @@ export const LoginPage = () => {
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handlePasswordChange = (event) => {
+    setValues({
+      ...values,
+      password: event.target.value,
+      passwordValidationError: null,
+    });
+  };
+
+  const handleEmailChange = (event) => {
+    setValues({
+      ...values,
+      email: event.target.value,
+      emailValidationError: null,
+    });
   };
 
   const handleClickShowPassword = () => {
@@ -48,23 +67,46 @@ export const LoginPage = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  const validateEmail = () => {
+    var regex = /\S+@\S+\.\S+/;
+    let valid = regex.test(values.email);
+    if (!values.email || valid) {
+      return setValues({ ...values, emailValidationError: null });
+    }
+    return setValues({
+      ...values,
+      emailValidationError: "Email isn't correctly formatted",
+    });
+  };
+  const showPasswordCopyError = (e) => {
+    e.preventDefault();
+    return setValues({
+      ...values,
+      passwordValidationError: "Copy is forbidden",
+    });
+  };
   const submit = async () => {
     setValues({
       ...values,
       isLoading: true,
     });
     try {
+      console.log({
+        email: values.email,
+        password: values.password,
+        accessType: "Web",
+        appType: "MemoryWall",
+      });
       let response = await axios.post("http://127.0.0.1:8000/api/login", {
         email: values.email,
         password: values.password,
         accessType: "Web",
         appType: "MemoryWall",
       });
-      localStorage.setItem('user', response.data.data.user);
-      localStorage.setItem('profile', response.data.data.profile);
-      localStorage.setItem('accessToken', response.data.data.token);
-      localStorage.setItem('expiryDate', response.data.data.expiryDate);
+      localStorage.setItem("user", response.data.data.user);
+      localStorage.setItem("profile", response.data.data.profile);
+      localStorage.setItem("accessToken", response.data.data.token);
+      localStorage.setItem("expiryDate", response.data.data.expiryDate);
       setValues({
         ...values,
         isLoading: false,
@@ -87,16 +129,30 @@ export const LoginPage = () => {
             title={<h2 className="text-center">Log in</h2>}
           ></CardHeader>
           <CardContent>
-            <FormControl required fullWidth className="mb-3">
+            <FormControl
+              error={values.emailValidationError ? true : false}
+              required
+              fullWidth
+              className="mb-3"
+            >
               <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email"
                 value={values.email}
-                onChange={handleChange("email")}
+                onChange={handleEmailChange}
+                onBlur={validateEmail}
                 label="Email"
               />
+              <FormHelperText id="component-error-text">
+                {values.emailValidationError ?? ""}
+              </FormHelperText>
             </FormControl>
-            <FormControl required fullWidth variant="outlined">
+            <FormControl
+              error={values.passwordValidationError ? true : false}
+              required
+              fullWidth
+              variant="outlined"
+            >
               <InputLabel htmlFor="outlined-adornment-password">
                 Password
               </InputLabel>
@@ -104,7 +160,10 @@ export const LoginPage = () => {
                 id="outlined-adornment-password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
-                onChange={handleChange("password")}
+                onChange={handlePasswordChange}
+                onPaste={(e) => {
+                  showPasswordCopyError(e);
+                }}
                 fullWidth
                 endAdornment={
                   <InputAdornment position="end">
@@ -120,6 +179,9 @@ export const LoginPage = () => {
                 }
                 label="Password"
               />
+              <FormHelperText id="component-error-text">
+                {values.passwordValidationError ?? ""}
+              </FormHelperText>
             </FormControl>
             <FormControlLabel
               control={<Checkbox {...values.rememberMe} defaultChecked />}
