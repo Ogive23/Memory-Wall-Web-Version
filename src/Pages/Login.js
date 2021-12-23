@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,8 +25,12 @@ import SendIcon from "@mui/icons-material/Send";
 import Lottie from "lottie-react";
 import loadingAnimation from "./../Assets/Animations/lf30_editor_acdfloqg.json";
 import axios from "axios";
+import { Login } from "../Actions/UserSessionActions";
+import { User } from "../Models/User";
+import { Factory } from "../Helpers/Factory";
 
 export const LoginPage = () => {
+  const dispatch = useDispatch();
   const [values, setValues] = useState({
     email: "",
     emailValidationError: null,
@@ -67,6 +72,7 @@ export const LoginPage = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   const validateEmail = () => {
     var regex = /\S+@\S+\.\S+/;
     let valid = regex.test(values.email);
@@ -78,6 +84,7 @@ export const LoginPage = () => {
       emailValidationError: "Email isn't correctly formatted",
     });
   };
+
   const showPasswordCopyError = (e) => {
     e.preventDefault();
     return setValues({
@@ -85,42 +92,56 @@ export const LoginPage = () => {
       passwordValidationError: "Copy is forbidden",
     });
   };
+
   const submit = async () => {
     setValues({
       ...values,
       isLoading: true,
     });
     try {
-      console.log({
-        email: values.email,
-        password: values.password,
-        accessType: "Web",
-        appType: "MemoryWall",
-      });
       let response = await axios.post("http://127.0.0.1:8000/api/login", {
         email: values.email,
         password: values.password,
         accessType: "Web",
         appType: "MemoryWall",
       });
-      localStorage.setItem("user", response.data.data.user);
-      localStorage.setItem("profile", response.data.data.profile);
-      localStorage.setItem("accessToken", response.data.data.token);
-      localStorage.setItem("expiryDate", response.data.data.expiryDate);
+      let factory = new Factory();
+      let user = factory.getObjectFromJson(response.data.data.user, "user");
+      let profile = factory.getObjectFromJson(
+        response.data.data.profile,
+        "profile"
+      );
+      let accessToken = response.data.data.token;
+      let expiryDate = response.data.data.expiryDate;
+      localStorage.setItem("user", user);
+      localStorage.setItem("profile", profile);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("expiryDate", expiryDate);
+      dispatch(
+        Login(
+          user,
+          profile,
+          response.data.data.token,
+          response.data.data.expiryDate
+        )
+      );
       setValues({
         ...values,
         isLoading: false,
       });
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response);
       setValues({
         ...values,
         isLoading: false,
-        error: error.response.data["Err_Desc"],
+        error: error.response
+          ? error.response.data["Err_Desc"]
+          : "Something Went Wrong",
         password: "",
       });
     }
   };
+
   return (
     <Container maxWidth="sm">
       <Card variant="outlined" sx={{ borderRadius: 5 }} className="px-4 py-2">

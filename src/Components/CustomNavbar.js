@@ -4,9 +4,11 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import "./../CSS/Navbar.css";
 import NavLink from "./NavLink";
 import NavUserAvatar from "./NavUserAvatar";
+import {useSelector} from 'react-redux';
 
 export const CustomNavbar = () => {
-  console.log(localStorage.getItem("user"));
+  const loggedIn = useSelector(state => state.UserSession.loggedIn);
+  console.log(loggedIn);
   return (
     <Navbar
       bg="transparent"
@@ -22,7 +24,7 @@ export const CustomNavbar = () => {
           <Nav className="align-items-center">
             <NavLink title="Home" route="#home"></NavLink>
             <NavLink title="Link" route="#link"></NavLink>
-            {localStorage.getItem("user") ? (
+            {loggedIn ? (
               <NavUserAvatar />
             ) : (
               <>
