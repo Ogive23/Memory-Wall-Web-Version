@@ -1,3 +1,4 @@
+import { Pagination } from "@mui/material";
 import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Factory } from "../Helpers/Factory";
@@ -67,6 +68,7 @@ export class MemoryList extends Component {
               );
             })}
           </Row>
+          <Pagination onPageChange={""} style={{ background:'#fff' }}  count={10} color="primary" />
         </Container>
       );
     } catch (DataObjectTypeNotFound) {

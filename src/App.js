@@ -25,8 +25,8 @@ function App() {
   return (
     <main id="main">
       <CustomNavbar />
-      <LoginPage />
-      {/* <HomePage /> */}
+      {/* <LoginPage /> */}
+      <HomePage />
       <FloatingActionButton />
     </main>
   );

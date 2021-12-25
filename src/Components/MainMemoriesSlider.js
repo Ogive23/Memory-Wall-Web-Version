@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Carousel } from "react-bootstrap";
 import { Factory } from "../Helpers/Factory";
-const memories = [
+const SampleMemories = [
   {
     id: "12671265",
     personName: "Omar Mohamed",
@@ -65,37 +65,38 @@ const memories = [
     },
   },
 ];
-export class MainMemoriesSlider extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      memories,
-    };
-  }
-  render() {
-    let factory = new Factory();
-    this.state.memories = factory.getObjectsFromJson(memories, "memories");
-    return (
-      <Carousel>
-        {this.state.memories.map((memory) => {
-          return (
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src={memory.image}
-                alt="Second slide"
-              />
 
-              <Carousel.Caption>
-                <h3>{memory.personName}</h3>
-                <p>{memory.brief}</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          );
-        })}
-      </Carousel>
-    );
-  }
+export const MainMemoriesSlider = () => {
+  const [memories, setMemories] = useState([]);
+  const initializeMemories = () => {
+    let factory = new Factory();
+    setMemories(factory.getObjectsFromJson(SampleMemories, "memories"));
+  };
+  useEffect(() => {
+    initializeMemories();
+    return () => {}
+  }, []);
+  return (
+    <Carousel interval={100000}>
+    {memories.map((memory) => {
+      return (
+        <Carousel.Item className="text-center">
+          <img
+            className="d-block"
+            src={memory.image}
+            alt="Second slide"
+            style={{ height: 'inherit' }}
+          />
+
+          <Carousel.Caption>
+            <h3>{memory.personName}</h3>
+            <p>{memory.brief}</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      );
+    })}
+  </Carousel>
+  )
 }
 
 export default MainMemoriesSlider;
