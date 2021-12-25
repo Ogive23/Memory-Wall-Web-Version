@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Nav } from 'react-bootstrap';
 
 export class NavLink extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         function changeBackground(e) {
             e.target.style.transition = "all 0.5s"
-            if (e.type == "mouseover") {
+            if (e.type === "mouseover") {
                 e.target.style.transform = "scale(1.4)";
                 e.target.style.color = "gold";
                 return;

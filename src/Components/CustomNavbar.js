@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import { React } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import "./../CSS/Navbar.css";
 import NavLink from "./NavLink";
 import NavUserAvatar from "./NavUserAvatar";
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const CustomNavbar = () => {
   const loggedIn = useSelector(state => state.UserSession.loggedIn);

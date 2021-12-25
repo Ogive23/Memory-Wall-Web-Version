@@ -12,7 +12,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -26,7 +26,6 @@ import Lottie from "lottie-react";
 import loadingAnimation from "./../Assets/Animations/lf30_editor_acdfloqg.json";
 import axios from "axios";
 import { Login } from "../Actions/UserSessionActions";
-import { User } from "../Models/User";
 import { Factory } from "../Helpers/Factory";
 
 export const LoginPage = () => {

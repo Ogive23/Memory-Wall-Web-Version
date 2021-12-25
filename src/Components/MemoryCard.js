@@ -14,22 +14,22 @@ import MemoryCardSettingsButton from './MemoryCardSettingsButton';
 export class MemoryCard extends Component {
     render() {
         const { memory } = this.props;
+        const imageUrl = `http://127.0.0.1:8000${memory.image}`;
         return (
             <Card sx={{ maxWidth: 345 }}>
                 <CardHeader
                     avatar={
-                        <Avatar alt={memory.author.name} src={memory.author.image ?? '#'} />
+                        <Avatar alt={memory.name} src={memory.image ?? '#'} />
                     }
                     action={
                         <MemoryCardSettingsButton />
                     }
-                    title={memory.author.name}
-                    subheader={memory.createdOn}
+
                 />
                 <CardMedia
                     component="img"
                     height="194"
-                    image={memory.image}
+                    src={imageUrl}
                     alt={memory.personName}
                 />
                 <CardContent>
@@ -40,12 +40,12 @@ export class MemoryCard extends Component {
                         {memory.birthDate + " - " + memory.deathDate}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {memory.brief}
+                        {memory.lifeStory}
                     </Typography>
                     <Button size="small">Know more about {memory.personName}</Button>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <Badge color="secondary" badgeContent={memory.numberOfLikes} max={999} showZero
+                    <Badge color="secondary" badgeContent={memory.likes_count} max={999} showZero
                         overlap="circular" anchorOrigin={{
                             vertical: 'top',
                             horizontal: 'right',
@@ -54,7 +54,7 @@ export class MemoryCard extends Component {
                             <FavoriteIcon />
                         </IconButton>
                     </Badge>
-                    <Badge color="success" badgeContent={memory.numberOfShares} max={999} showZero
+                    <Badge color="success" badgeContent={memory.likes_count} max={999} showZero
                         overlap="circular" anchorOrigin={{
                             vertical: 'top',
                             horizontal: 'right',
