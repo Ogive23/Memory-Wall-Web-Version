@@ -4,10 +4,10 @@ import MemoryList from "./../Components/MemoryList";
 export class HomePage extends Component {
   render() {
     return (
-      <main>
+      <>
         <MainMemoriesSlider />
         <MemoryList />
-      </main>
+      </>
     );
   }
 }

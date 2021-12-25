@@ -11,12 +11,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Badge, Button } from '@mui/material';
 import MemoryCardSettingsButton from './MemoryCardSettingsButton';
+import dateFormat from 'dateformat';
 export class MemoryCard extends Component {
     render() {
         const { memory } = this.props;
         const imageUrl = `http://127.0.0.1:8000${memory.image}`;
         return (
-            <Card sx={{ maxWidth: 345 }}>
+            <Card >
                 <CardHeader
                     avatar={
                         <Avatar alt={memory.name} src={memory.image ?? '#'} />
@@ -24,6 +25,8 @@ export class MemoryCard extends Component {
                     action={
                         <MemoryCardSettingsButton />
                     }
+                    title={memory.personName}
+                    subheader={dateFormat(memory.created_at, "d-mm-yyyy")}
 
                 />
                 <CardMedia
