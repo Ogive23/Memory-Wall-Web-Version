@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Container } from "react-bootstrap";
 import { Factory } from "../Helpers/Factory";
 import axios from 'axios';
 
@@ -90,26 +90,29 @@ export const MainMemoriesSlider = () => {
     return () => { }
   }, []);
   return (
-    <Carousel interval={100000}>
-      {memories.map((memory) => {
-        const imageUrl = `http://127.0.0.1:8000${memory.image}`;
-        return (
-          <Carousel.Item className="text-center">
-            <img
-              className="d-block"
-              src={imageUrl}
-              alt="Second slide"
-              style={{ height: 'inherit' }}
-            />
+    <Container>
+      <Carousel interval={100000}>
+        {memories.map((memory) => {
+          const imageUrl = `http://127.0.0.1:8000${memory.image}`;
+          return (
+            <Carousel.Item className="text-center">
+              <img
+                className="d-block"
+                src={imageUrl}
+                alt="Second slide"
+                style={{ height: 'inherit' }}
+              />
 
-            <Carousel.Caption>
-              <h3>{memory.personName}</h3>
-              <p>{memory.brief}</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        );
-      })}
-    </Carousel>
+              <Carousel.Caption>
+                <h3>{memory.personName}</h3>
+                <p>{memory.brief}</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          );
+        })}
+      </Carousel>
+
+    </Container>
   )
 }
 
