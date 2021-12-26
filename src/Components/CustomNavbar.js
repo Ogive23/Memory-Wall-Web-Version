@@ -18,19 +18,19 @@ export const CustomNavbar = () => {
       sticky="top"
     >
       <Container>
-        <Navbar.Brand href="#home">Memory Wall</Navbar.Brand>
+        <Navbar.Brand href="/">Memory Wall</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="align-items-center">
-            <NavLink title="Home" route="#home"></NavLink>
-            <NavLink title="Link" route="#link"></NavLink>
+            <NavLink title="Home" route="/"></NavLink>
+            {/* <NavLink title="Link" route="#link"></NavLink> */}
             {loggedIn ? (
               <NavUserAvatar />
             ) : (
               <>
                 <NavLink
                   title="Login"
-                  route="#login"
+                  route="/login"
                   extraClasses="text-white"
                 ></NavLink>
                 |

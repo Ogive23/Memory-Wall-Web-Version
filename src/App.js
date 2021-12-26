@@ -3,9 +3,14 @@ import "./CSS/App.css";
 import CustomNavbar from "./Components/CustomNavbar";
 import FloatingActionButton from "./Components/FloatingActionButton";
 import HomePage from "./Pages/Home";
-// import LoginPage from "./Pages/Login";
+import LoginPage from "./Pages/Login";
 import { useDispatch } from "react-redux";
 import { Login } from "./Actions/UserSessionActions";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 function App() {
   ///Store
 
@@ -22,12 +27,22 @@ function App() {
     );
   }
   return (
-    <main id="main">
-      <CustomNavbar />
-      {/* <LoginPage /> */}
-      <HomePage />
-      <FloatingActionButton />
-    </main>
+    <Router>
+      <div>
+        {/* <main id="main"> */}
+        <CustomNavbar />
+        {/* <LoginPage /> */}
+        {/* <HomePage /> */}
+        <FloatingActionButton />
+        {/* </main> */}
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<HomePage />} />
+
+        </Routes>
+
+      </div>
+    </Router>
   );
 }
 
