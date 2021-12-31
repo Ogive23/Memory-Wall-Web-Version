@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 export const CustomNavbar = () => {
   const loggedIn = useSelector(state => state.UserSession.loggedIn);
-  console.log(loggedIn);
+  console.log("AM i user?" + loggedIn);
   return (
     <Navbar
       bg="transparent"

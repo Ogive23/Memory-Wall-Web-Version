@@ -71,11 +71,8 @@ import axios from 'axios';
 export const MainMemoriesSlider = () => {
   const [memories, setMemories] = useState([]);
   const [error, setError] = useState('');
-  const config = {
-    headers: { Authorization: `Bearer lhhMhiK8wNicHB1v3tSpr6gGJ4r1tCHwskPU5YwRMtXu7CKSFrkyiWvIvIyz` }
-  };
   const initializeMemories = () => {
-    axios.get(`http://127.0.0.1:8000/api/memorywall/mostLikelyMemories`, config)
+    axios.get(`http://127.0.0.1:8000/api/memorywall/getTopMemories`)
       .then(res => {
         // let factory = new Factory();
         // setMemories(factory.getObjectsFromJson(res.data.data, "memories"));

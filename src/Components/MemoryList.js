@@ -54,17 +54,13 @@ function MemoryList() {
   const [total, setTotal] = useState();
   const [current_page, setCurrrentPage] = useState(1);
   const [per_page, setPerPage] = useState();
-
   const [error, setError] = useState('');
-  const config = {
-    headers: { Authorization: `Bearer lhhMhiK8wNicHB1v3tSpr6gGJ4r1tCHwskPU5YwRMtXu7CKSFrkyiWvIvIyz` }
-  };
   function handlePageChange(pageNumber) {
     console.log(`active page is ${pageNumber}`);
     fetchMemories(pageNumber);
   };
   function fetchMemories(current_page) {
-    axios.get(`http://127.0.0.1:8000/api/memorywall/memories?page=${current_page}`, config)
+    axios.get(`http://127.0.0.1:8000/api/memorywall/memories?page=${current_page}`)
       .then(res => {
         setMemories(res.data.data.data);
         setPerPage(res.data.data.per_page);

@@ -6,16 +6,17 @@ import HomePage from "./Pages/Home";
 import LoginPage from "./Pages/Login";
 import { useDispatch } from "react-redux";
 import { Login } from "./Actions/UserSessionActions";
+import ProtectedRoute from "./Helpers/ProtectedRoute";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
 function App() {
+  const accessToken = localStorage.getItem('accessToken');
+
   ///Store
-
   const dispatch = useDispatch();
-
   if (localStorage.getItem("user")) {
     dispatch(
       Login(
@@ -37,8 +38,8 @@ function App() {
         {/* </main> */}
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<HomePage />} />
-
+          <Route exact path='/' element={<HomePage />}>
+          </Route>
         </Routes>
 
       </div>
