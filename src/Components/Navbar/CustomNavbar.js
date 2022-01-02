@@ -1,7 +1,7 @@
 import { React } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import "./../CSS/Navbar.css";
+import "./../../CSS/Navbar.css";
 import NavLink from "./NavLink";
 import NavUserAvatar from "./NavUserAvatar";
 import { useSelector } from 'react-redux';
@@ -11,11 +11,10 @@ export const CustomNavbar = () => {
   console.log("AM i user?" + loggedIn);
   return (
     <Navbar
-      bg="transparent"
       variant="dark"
       expand="sm"
       fixed="top"
-      sticky="top"
+      // sticky="top"
     >
       <Container>
         <Navbar.Brand href="/">Memory Wall</Navbar.Brand>

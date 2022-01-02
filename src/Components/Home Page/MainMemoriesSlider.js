@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Container } from "react-bootstrap";
-import { Factory } from "../Helpers/Factory";
+import { Factory } from "../../Helpers/Factory";
 import axios from 'axios';
 
 // const SampleMemories = [

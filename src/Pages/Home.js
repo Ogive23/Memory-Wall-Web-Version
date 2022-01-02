@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import MainMemoriesSlider from "./../Components/MainMemoriesSlider";
-import MemoryList from "./../Components/MemoryList";
+import MainMemoriesSlider from "../Components/Home Page/MainMemoriesSlider";
+import MemoryList from "../Components/Home Page/MemoryList";
 export class HomePage extends Component {
   render() {
     return (

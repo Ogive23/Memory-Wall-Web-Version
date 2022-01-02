@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Logout } from "./../Actions/UserSessionActions";
+import { Logout } from "../../Actions/UserSessionActions";
 
 export default function NavUserAvatar() {
   const dispatch = useDispatch();
