@@ -2,8 +2,6 @@ import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import VisibilitySensor from "react-visibility-sensor";
 import CountUp from 'react-countup';
-import { Animated } from "react-animated-css";
-import FadeIn from 'react-fade-in';
 
 export const CustomCountUp = ({ size, end, suffix }) => {
     return (
