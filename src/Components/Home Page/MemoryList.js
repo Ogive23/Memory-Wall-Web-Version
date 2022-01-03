@@ -5,6 +5,7 @@ import { Col, Container, Row } from "react-bootstrap";
 // import { Factory } from "../Helpers/Factory";
 import MemoryCard from "./MemoryCard";
 import axios from 'axios';
+import { useSelector } from "react-redux";
 
 // const memories = [
 //   {
@@ -55,12 +56,15 @@ function MemoryList() {
   const [current_page, setCurrrentPage] = useState(1);
   const [per_page, setPerPage] = useState();
   const [error, setError] = useState('');
+  const BASE_API_CALLER = useSelector(state => state.UserSession.BASE_API_URL);
+
   function handlePageChange(pageNumber) {
     console.log(`active page is ${pageNumber}`);
     fetchMemories(pageNumber);
   };
   function fetchMemories(current_page) {
     axios.get(`http://127.0.0.1:8000/api/memorywall/memories?page=${current_page}`)
+    axios.get(BASE_API_CALLER + `/api/memorywall/memories?page=${current_page}`)
       .then(res => {
         setMemories(res.data.data.data);
         setPerPage(res.data.data.per_page);

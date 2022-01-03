@@ -67,12 +67,14 @@ import axios from 'axios';
 //     },
 //   },
 // ];
+import { useSelector } from "react-redux";
 
 export const MainMemoriesSlider = () => {
   const [memories, setMemories] = useState([]);
   const [error, setError] = useState('');
+  const BASE_API_CALLER = useSelector(state => state.UserSession.BASE_API_URL);
   const initializeMemories = () => {
-    axios.get(`http://127.0.0.1:8000/api/memorywall/getTopMemories`)
+    axios.get(BASE_API_CALLER + `/api/memorywall/getTopMemories`)
       .then(res => {
         // let factory = new Factory();
         // setMemories(factory.getObjectsFromJson(res.data.data, "memories"));

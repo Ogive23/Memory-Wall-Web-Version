@@ -1,7 +1,6 @@
 import { GlobalState } from "../Store";
 
 export const UserSession = (state = GlobalState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case "Login":
       return {
