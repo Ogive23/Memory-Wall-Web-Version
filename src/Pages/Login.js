@@ -28,6 +28,7 @@ import axios from "axios";
 import { Login } from "../Actions/UserSessionActions";
 import { Factory } from "../Helpers/Factory";
 import { useNavigate } from 'react-router-dom';
+
 export const LoginPage = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -92,94 +93,98 @@ export const LoginPage = () => {
       passwordValidationError: "Copy is forbidden",
     });
   };
-  function submit(e) {
-    e.preventDefault();
-    setValues({
-      ...values,
-      isLoading: true,
-    });
-    axios.post("http://127.0.0.1:8000/api/login", {
-      email: values.email,
-      password: values.password,
-      accessType: "Web",
-      appType: "MemoryWall",
-    }).then(response => {
-      setValues({
-        ...values,
-        isLoading: false,
-      });
-      let accessToken = response.data.data.token;
-      let expiryDate = response.data.data.expiryDate;
-      let factory = new Factory();
-      let user = factory.getObjectFromJson(response.data.data.user, "user");
-      let profile = factory.getObjectFromJson(
-        response.data.data.profile,
-        "profile"
-      );
-      localStorage.setItem("user", user);
-      localStorage.setItem("profile", profile);
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("expiryDate", expiryDate);
-      navigate('/')
-    }).catch(error => {
-      setValues({
-        ...values,
-        isLoading: false,
-      });
-      console.log("error")
-    });
-  }
-  // const submit = async () => {
+
+  // function submit(e) {
+  //   e.preventDefault();
   //   setValues({
   //     ...values,
   //     isLoading: true,
   //   });
-  //   try {
-  //     let response = await axios.post("http://127.0.0.1:8000/api/login", {
-  //       email: values.email,
-  //       password: values.password,
-  //       accessType: "Web",
-  //       appType: "MemoryWall",
+  //   axios.post("http://127.0.0.1:8000/api/login", {
+  //     email: values.email,
+  //     password: values.password,
+  //     accessType: "Web",
+  //     appType: "MemoryWall",
+  //   }).then(response => {
+  //     setValues({
+  //       ...values,
+  //       isLoading: false,
   //     });
+  //     let accessToken = response.data.data.token;
+  //     let expiryDate = response.data.data.expiryDate;
   //     let factory = new Factory();
   //     let user = factory.getObjectFromJson(response.data.data.user, "user");
   //     let profile = factory.getObjectFromJson(
   //       response.data.data.profile,
   //       "profile"
   //     );
-  //     let accessToken = response.data.data.token;
-  //     let expiryDate = response.data.data.expiryDate;
   //     localStorage.setItem("user", user);
   //     localStorage.setItem("profile", profile);
   //     localStorage.setItem("accessToken", accessToken);
   //     localStorage.setItem("expiryDate", expiryDate);
-  //     dispatch(
-  //       Login(
-  //         user,
-  //         profile,
-  //         response.data.data.token,
-  //         response.data.data.expiryDate
-  //       )
-  //     );
+  //     navigate('/')
+  //   }).catch(error => {
   //     setValues({
   //       ...values,
   //       isLoading: false,
   //     });
-  //   } catch (error) {
-  //     console.log(error.response);
-  //     setValues({
-  //       ...values,
-  //       isLoading: false,
-  //       error: error.response
-  //         ? error.response.data["Err_Desc"]
-  //         : "Something Went Wrong",
-  //       password: "",
-  //     });
-  //   }
-  // };
+  //     console.log("error")
+  //   });
+  // }
+
+  const submit = async () => {
+    //   e.preventDefault();
+    setValues({
+      ...values,
+      isLoading: true,
+    });
+    try {
+      let response = await axios.post("http://127.0.0.1:8000/api/login", {
+        email: values.email,
+        password: values.password,
+        accessType: "Web",
+        appType: "MemoryWall",
+      });
+      let factory = new Factory();
+      let user = factory.getObjectFromJson(response.data.data.user, "user");
+      let profile = factory.getObjectFromJson(
+        response.data.data.profile,
+        "profile"
+      );
+      let accessToken = response.data.data.token;
+      let expiryDate = response.data.data.expiryDate;
+      localStorage.setItem("user", user);
+      localStorage.setItem("profile", profile);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("expiryDate", expiryDate);
+      dispatch(
+        Login(
+          user,
+          profile,
+          response.data.data.token,
+          response.data.data.expiryDate
+        )
+      );
+      navigate('/home')
+      setValues({
+        ...values,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.log(error.response);
+      setValues({
+        ...values,
+        isLoading: false,
+        error: error.response
+          ? error.response.data["Err_Desc"]
+          : "Something Went Wrong",
+        password: "",
+      });
+    }
+  };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ my: 'auto' }}>
       <Card variant="outlined" sx={{ borderRadius: 5 }} className="px-4 py-2">
         <form onSubmit={submit}>
           <CardHeader
