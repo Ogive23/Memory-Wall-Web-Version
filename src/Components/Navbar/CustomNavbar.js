@@ -5,6 +5,7 @@ import "./../../CSS/Navbar.css";
 import NavLink from "./NavLink";
 import NavUserAvatar from "./NavUserAvatar";
 import { useSelector } from 'react-redux';
+import { AppRoutes } from "../../AppRoutes";
 
 export const CustomNavbar = () => {
   const loggedIn = useSelector(state => state.UserSession.loggedIn);
@@ -17,7 +18,7 @@ export const CustomNavbar = () => {
       // sticky="top"
     >
       <Container>
-        <Navbar.Brand href="/">Memory Wall</Navbar.Brand>
+        <Navbar.Brand href={AppRoutes.Landing}>Memory Wall</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="align-items-center">

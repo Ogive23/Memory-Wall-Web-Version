@@ -10,11 +10,10 @@ export const MainMemoriesSlider = () => {
   const [memories, setMemories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const BASE_API_CALLER = useSelector(state => state.UserSession.BASE_API_URL);
-  // console.log(BASE_API_CALLER);
+  const BASE_API_URL = useSelector(state => state.UserSession.BASE_API_URL);
 
   const initializeMemories = () => {
-    axios.get(BASE_API_CALLER + `/api/memorywall/getTopMemories`)
+    axios.get(BASE_API_URL + `/api/memorywall/getTopMemories`)
       .then(res => {
         let factory = new Factory();
         setMemories(factory.getObjectsFromJson(res.data.data, "memories"));
@@ -41,7 +40,7 @@ export const MainMemoriesSlider = () => {
         <Carousel interval={100000}>
           {memories.map((memory) => {
             console.log(memory);
-            const imageUrl = BASE_API_CALLER + `/${memory.image}`;
+            const imageUrl = BASE_API_URL + `/${memory.image}`;
             return (
               <Carousel.Item className="text-center">
                 <img

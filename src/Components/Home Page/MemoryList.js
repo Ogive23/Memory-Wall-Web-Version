@@ -12,7 +12,7 @@ export const MemoryList = () => {
   const [current_page, setCurrrentPage] = useState(1);
   const [per_page, setPerPage] = useState();
   const [error, setError] = useState('');
-  const BASE_API_CALLER = useSelector(state => state.UserSession.BASE_API_URL);
+  const BASE_API_URL = useSelector(state => state.UserSession.BASE_API_URL);
 
   function handlePageChange(pageNumber) {
     console.log(`active page is ${pageNumber}`);
@@ -20,7 +20,7 @@ export const MemoryList = () => {
   };
 
   function fetchMemories(current_page) {
-    axios.get(BASE_API_CALLER + `/api/memorywall/memories?page=${current_page}`)
+    axios.get(BASE_API_URL + `/api/memorywall/memories?page=${current_page}`)
       .then(res => {
         let factory = new Factory();
         setMemories(factory.getObjectsFromJson(res.data.data.data, "memories"));

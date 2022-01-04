@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -28,6 +28,7 @@ import axios from "axios";
 import { Login } from "../Actions/UserSessionActions";
 import { Factory } from "../Helpers/Factory";
 import { useNavigate } from 'react-router-dom';
+import { AppRoutes } from "../AppRoutes";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,8 @@ export const LoginPage = () => {
     showPassword: false,
     isLoading: false,
   });
+  const loggedIn = useSelector(state => state.UserSession.loggedIn);
+  const BASE_API_URL = useSelector(state => state.UserSession.BASE_API_URL);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -132,8 +135,8 @@ export const LoginPage = () => {
   //   });
   // }
 
-  const submit = async () => {
-    //   e.preventDefault();
+  const submit = async (e) => {
+    e.preventDefault();
     setValues({
       ...values,
       isLoading: true,
@@ -165,7 +168,7 @@ export const LoginPage = () => {
           response.data.data.expiryDate
         )
       );
-      navigate('/home')
+      navigate(AppRoutes.Home)
       setValues({
         ...values,
         isLoading: false,

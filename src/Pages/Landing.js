@@ -22,7 +22,7 @@ export const LandingPage = () => {
         <div>
             <Background />
             <Records loadRecords={loadRecords} />
-            {/* <Footer /> */}
+            <Footer />
         </div>
     )
 }
