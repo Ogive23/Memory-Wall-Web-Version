@@ -6,9 +6,9 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReportIcon from '@mui/icons-material/Report'; import ChatIcon from '@mui/icons-material/Chat';
 import { onAddMemoryActionClicked, onChatActionClicked, onReportActionClicked } from '../Hooks/FloatingActionButtonsHooks';
-
+import { Link } from "react-router-dom";
 const actions = [
-    { icon: <AddIcon />, name: 'Add Memory', color: 'blue', onClicked: onAddMemoryActionClicked },
+    { icon: <Link to="/add-memory"><AddIcon /></Link>, name: 'Add Memory', color: 'blue', onClicked: onAddMemoryActionClicked },
     { icon: <ReportIcon />, name: 'Report Error', color: 'red', onClicked: onReportActionClicked },
     { icon: <ChatIcon />, name: 'Talk to us', color: 'green', onClicked: onChatActionClicked },
 ];

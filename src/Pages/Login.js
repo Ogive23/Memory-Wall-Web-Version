@@ -30,6 +30,7 @@ import { Factory } from "../Helpers/Factory";
 import { useNavigate } from 'react-router-dom';
 export const LoginPage = () => {
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
   let navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
@@ -120,13 +121,14 @@ export const LoginPage = () => {
       localStorage.setItem("profile", profile);
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("expiryDate", expiryDate);
+      localStorage.setItem("isLoggedIn", true);
       navigate('/')
     }).catch(error => {
       setValues({
         ...values,
         isLoading: false,
       });
-      console.log("error")
+      setError("Something went wrong. Please try again later.");
     });
   }
   // const submit = async () => {
@@ -272,6 +274,7 @@ export const LoginPage = () => {
                 "Sign in"
               )}
             </Button>
+            {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
             <Link href="#" underline="none" sx={{ textAlign: "right" }}>
               Forgot Password?
             </Link>

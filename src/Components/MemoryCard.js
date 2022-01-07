@@ -46,7 +46,7 @@ export class MemoryCard extends Component {
                         <Typography variant="body2" color="text.secondary">
                             {memory.lifeStory}
                         </Typography>
-                        <Button size="small">Know more about {memory.personName}</Button>
+                        <Button size="small">{memory.personName} أعرف اكثر عن</Button>
                     </CardContent>
                     <CardActions disableSpacing>
                         <Badge color="secondary" badgeContent={memory.likes_count} max={999} showZero

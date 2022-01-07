@@ -3,6 +3,7 @@ import "./CSS/App.css";
 import CustomNavbar from "./Components/CustomNavbar";
 import FloatingActionButton from "./Components/FloatingActionButton";
 import HomePage from "./Pages/Home";
+import AddMemory from './Components/AddMemory';
 import LoginPage from "./Pages/Login";
 import { useDispatch } from "react-redux";
 import { Login } from "./Actions/UserSessionActions";
@@ -29,7 +30,7 @@ function App() {
   }
   return (
     <Router>
-      <div>
+      <div className="text-right">
         {/* <main id="main"> */}
         <CustomNavbar />
         {/* <LoginPage /> */}
@@ -38,12 +39,12 @@ function App() {
         {/* </main> */}
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route exact path='/' element={<HomePage />}>
-          </Route>
+          <Route exact path='/' element={<HomePage />} />
+          <Route exact path='/add-memory' element={<AddMemory />} />
         </Routes>
 
       </div>
-    </Router>
+    </Router >
   );
 }
 

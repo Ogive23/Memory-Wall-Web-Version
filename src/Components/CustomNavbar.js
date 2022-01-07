@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import "./../CSS/Navbar.css";
@@ -7,8 +7,11 @@ import NavUserAvatar from "./NavUserAvatar";
 import { useSelector } from 'react-redux';
 
 export const CustomNavbar = () => {
-  const loggedIn = useSelector(state => state.UserSession.loggedIn);
-  console.log("AM i user?" + loggedIn);
+  let loggedIn = localStorage.getItem('isLoggedIn');
+  useEffect(() => {
+    console.log("AM i user?" + loggedIn);
+
+  }, [loggedIn])
   return (
     <Navbar
       bg="transparent"
@@ -22,20 +25,20 @@ export const CustomNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="align-items-center">
-            <NavLink title="Home" route="/"></NavLink>
+            {/* <NavLink title="الصفحة الرئيسية" route="/"></NavLink> */}
             {/* <NavLink title="Link" route="#link"></NavLink> */}
             {loggedIn ? (
               <NavUserAvatar />
             ) : (
               <>
                 <NavLink
-                  title="Login"
+                  title="تسجيل دخول"
                   route="/login"
                   extraClasses="text-white"
                 ></NavLink>
                 |
                 <NavLink
-                  title="Register"
+                  title="إنشاء حساب"
                   route="#register"
                   extraClasses="text-white"
                 ></NavLink>

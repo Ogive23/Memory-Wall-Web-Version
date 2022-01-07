@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const options = [
-    'Update',
-    'Delete',
+    'تعديل',
+    'إزالة',
 ];
 
 const ITEM_HEIGHT = 48;
