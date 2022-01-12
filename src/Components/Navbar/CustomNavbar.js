@@ -1,10 +1,11 @@
 import { React, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import "./../CSS/Navbar.css";
+import "./../../CSS/Navbar.css";
 import NavLink from "./NavLink";
 import NavUserAvatar from "./NavUserAvatar";
 import { useSelector } from 'react-redux';
+import { AppRoutes } from "../../AppRoutes";
 
 export const CustomNavbar = () => {
   let loggedIn = localStorage.getItem('isLoggedIn');
@@ -14,14 +15,13 @@ export const CustomNavbar = () => {
   }, [loggedIn])
   return (
     <Navbar
-      bg="transparent"
       variant="dark"
       expand="sm"
       fixed="top"
-      sticky="top"
+      // sticky="top"
     >
       <Container>
-        <Navbar.Brand href="/">Memory Wall</Navbar.Brand>
+        <Navbar.Brand href={AppRoutes.Landing}>Memory Wall</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="align-items-center">

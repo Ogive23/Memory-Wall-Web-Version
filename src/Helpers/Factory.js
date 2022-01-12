@@ -5,6 +5,7 @@ import { User } from "../Models/User";
 
 export class Factory {
   getObjectFromJson(dataObject, type) {
+    console.log(type);
     switch (type) {
       case "memory":
         return new Memory(
@@ -16,16 +17,16 @@ export class Factory {
           dataObject["brief"],
           dataObject["lifeStory"],
           dataObject["image"],
-          dataObject["createdOn"],
-          dataObject["numberOfLikes"],
+          dataObject["created_at"],
+          dataObject["likes_count"],
           dataObject["numberOfShares"],
-          new User(
+          dataObject["createdBy"] ? new User(
             dataObject["createdBy"]["id"],
             dataObject["createdBy"]["name"],
             dataObject["createdBy"]["userName"],
             dataObject["createdBy"]["email"],
             dataObject["createdBy"]["image"]
-          )
+          ) : null
         );
       case "user":
         return new User(

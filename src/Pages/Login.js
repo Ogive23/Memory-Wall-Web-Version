@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -28,6 +28,8 @@ import axios from "axios";
 import { Login } from "../Actions/UserSessionActions";
 import { Factory } from "../Helpers/Factory";
 import { useNavigate } from 'react-router-dom';
+import { AppRoutes } from "../AppRoutes";
+
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
@@ -42,6 +44,8 @@ export const LoginPage = () => {
     showPassword: false,
     isLoading: false,
   });
+  const loggedIn = useSelector(state => state.UserSession.loggedIn);
+  const BASE_API_URL = useSelector(state => state.UserSession.BASE_API_URL);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -93,194 +97,200 @@ export const LoginPage = () => {
       passwordValidationError: "Copy is forbidden",
     });
   };
-  function submit(e) {
-    e.preventDefault();
-    setValues({
-      ...values,
-      isLoading: true,
-    });
-    axios.post("http://127.0.0.1:8000/api/login", {
-      email: values.email,
-      password: values.password,
-      accessType: "Web",
-      appType: "MemoryWall",
-    }).then(response => {
-      setValues({
-        ...values,
-        isLoading: false,
-      });
-      let accessToken = response.data.data.token;
-      let expiryDate = response.data.data.expiryDate;
-      let factory = new Factory();
-      let user = factory.getObjectFromJson(response.data.data.user, "user");
-      let profile = factory.getObjectFromJson(
-        response.data.data.profile,
-        "profile"
-      );
-      localStorage.setItem("user", user);
-      localStorage.setItem("profile", profile);
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("expiryDate", expiryDate);
-      localStorage.setItem("isLoggedIn", true);
-      navigate('/')
-    }).catch(error => {
-      setValues({
-        ...values,
-        isLoading: false,
-      });
-      setError("Something went wrong. Please try again later.");
-    });
-  }
-  // const submit = async () => {
+
+  // function submit(e) {
+  //   e.preventDefault();
   //   setValues({
   //     ...values,
   //     isLoading: true,
   //   });
-  //   try {
-  //     let response = await axios.post("http://127.0.0.1:8000/api/login", {
-  //       email: values.email,
-  //       password: values.password,
-  //       accessType: "Web",
-  //       appType: "MemoryWall",
+  //   axios.post("http://127.0.0.1:8000/api/login", {
+  //     email: values.email,
+  //     password: values.password,
+  //     accessType: "Web",
+  //     appType: "MemoryWall",
+  //   }).then(response => {
+  //     setValues({
+  //       ...values,
+  //       isLoading: false,
   //     });
+  //     let accessToken = response.data.data.token;
+  //     let expiryDate = response.data.data.expiryDate;
   //     let factory = new Factory();
   //     let user = factory.getObjectFromJson(response.data.data.user, "user");
   //     let profile = factory.getObjectFromJson(
   //       response.data.data.profile,
   //       "profile"
   //     );
-  //     let accessToken = response.data.data.token;
-  //     let expiryDate = response.data.data.expiryDate;
   //     localStorage.setItem("user", user);
   //     localStorage.setItem("profile", profile);
   //     localStorage.setItem("accessToken", accessToken);
   //     localStorage.setItem("expiryDate", expiryDate);
-  //     dispatch(
-  //       Login(
-  //         user,
-  //         profile,
-  //         response.data.data.token,
-  //         response.data.data.expiryDate
-  //       )
-  //     );
+  //     navigate('/')
+  //   }).catch(error => {
   //     setValues({
   //       ...values,
   //       isLoading: false,
   //     });
-  //   } catch (error) {
-  //     console.log(error.response);
-  //     setValues({
-  //       ...values,
-  //       isLoading: false,
-  //       error: error.response
-  //         ? error.response.data["Err_Desc"]
-  //         : "Something Went Wrong",
-  //       password: "",
-  //     });
-  //   }
-  // };
+  //     console.log("error")
+  //   });
+  // }
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setValues({
+      ...values,
+      isLoading: true,
+    });
+    try {
+      let response = await axios.post("http://127.0.0.1:8000/api/login", {
+        email: values.email,
+        password: values.password,
+        accessType: "Web",
+        appType: "MemoryWall",
+      });
+      let factory = new Factory();
+      let user = factory.getObjectFromJson(response.data.data.user, "user");
+      let profile = factory.getObjectFromJson(
+        response.data.data.profile,
+        "profile"
+      );
+      let accessToken = response.data.data.token;
+      let expiryDate = response.data.data.expiryDate;
+      localStorage.setItem("user", user);
+      localStorage.setItem("profile", profile);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("expiryDate", expiryDate);
+      dispatch(
+        Login(
+          user,
+          profile,
+          response.data.data.token,
+          response.data.data.expiryDate
+        )
+      );
+      navigate(AppRoutes.Home)
+      setValues({
+        ...values,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.log(error.response);
+      setValues({
+        ...values,
+        isLoading: false,
+        error: error.response
+          ? error.response.data["Err_Desc"]
+          : "Something Went Wrong",
+        password: "",
+      });
+    }
+  };
 
   return (
-    <Container maxWidth="sm">
-      <Card variant="outlined" sx={{ borderRadius: 5 }} className="px-4 py-2">
-        <form onSubmit={submit}>
-          <CardHeader
-            title={<h2 className="text-center">Log in</h2>}
-          ></CardHeader>
-          <CardContent>
-            <FormControl
-              error={values.emailValidationError ? true : false}
-              required
-              fullWidth
-              className="mb-3"
-            >
-              <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-email"
-                value={values.email}
-                onChange={handleEmailChange}
-                onBlur={validateEmail}
-                label="Email"
-              />
-              <FormHelperText id="component-error-text">
-                {values.emailValidationError ?? ""}
-              </FormHelperText>
-            </FormControl>
-            <FormControl
-              error={values.passwordValidationError ? true : false}
-              required
-              fullWidth
-              variant="outlined"
-            >
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handlePasswordChange}
-                onPaste={(e) => {
-                  showPasswordCopyError(e);
-                }}
+
+    <Container maxWidth="sm" sx={{ my: 'auto' }}>
+      <Box pt={15}>
+        <Card variant="outlined" sx={{ borderRadius: 5 }} className="px-4 py-2">
+          <form onSubmit={submit}>
+            <CardHeader
+              title={<h2 className="text-center">Log in</h2>}
+            ></CardHeader>
+            <CardContent>
+              <FormControl
+                error={values.emailValidationError ? true : false}
+                required
                 fullWidth
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
+                className="mb-3"
+              >
+                <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-email"
+                  value={values.email}
+                  onChange={handleEmailChange}
+                  onBlur={validateEmail}
+                  label="Email"
+                />
+                <FormHelperText id="component-error-text">
+                  {values.emailValidationError ?? ""}
+                </FormHelperText>
+              </FormControl>
+              <FormControl
+                error={values.passwordValidationError ? true : false}
+                required
+                fullWidth
+                variant="outlined"
+              >
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handlePasswordChange}
+                  onPaste={(e) => {
+                    showPasswordCopyError(e);
+                  }}
+                  fullWidth
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+                <FormHelperText id="component-error-text">
+                  {values.passwordValidationError ?? ""}
+                </FormHelperText>
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox {...values.rememberMe} defaultChecked />}
+                onChange={handleChange("rememberMe")}
+                label="Remember me"
               />
-              <FormHelperText id="component-error-text">
-                {values.passwordValidationError ?? ""}
-              </FormHelperText>
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox {...values.rememberMe} defaultChecked />}
-              onChange={handleChange("rememberMe")}
-              label="Remember me"
-            />
-            <Typography
-              variant="body1"
-              sx={{ textAlign: "center", color: "#ff1744" }}
-              className="text-center"
-              gutterBottom
-            >
-              {values.error ?? ""}
-            </Typography>
-          </CardContent>
-          <CardActions className="d-grid">
-            <Button
-              variant="contained"
-              endIcon={values.isLoading ? <></> : <SendIcon />}
-              style={{ background: "#363B42" }}
-              className="mb-3 py-2"
-              // onClick={submit}
-              type="submit"
-              disabled={values.isLoading ? true : false}
-            >
-              {values.isLoading ? (
-                <Box sx={{ width: "10%", height: "55%" }}>
-                  <Lottie animationData={loadingAnimation} />
-                </Box>
-              ) : (
-                "Sign in"
-              )}
-            </Button>
-            {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-            <Link href="#" underline="none" sx={{ textAlign: "right" }}>
-              Forgot Password?
-            </Link>
-          </CardActions>
-        </form>
-      </Card>
+              <Typography
+                variant="body1"
+                sx={{ textAlign: "center", color: "#ff1744" }}
+                className="text-center"
+                gutterBottom
+              >
+                {values.error ?? ""}
+              </Typography>
+            </CardContent>
+            <CardActions className="d-grid">
+              <Button
+                variant="contained"
+                endIcon={values.isLoading ? <></> : <SendIcon />}
+                style={{ background: "#363B42" }}
+                className="mb-3 py-2"
+                // onClick={submit}
+                type="submit"
+                disabled={values.isLoading ? true : false}
+              >
+                {values.isLoading ? (
+                  <Box sx={{ width: "10%", height: "55%" }}>
+                    <Lottie animationData={loadingAnimation} />
+                  </Box>
+                ) : (
+                  "Sign in"
+                )}
+              </Button>
+              {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
+              <Link href="#" underline="none" sx={{ textAlign: "right" }}>
+                Forgot Password?
+              </Link>
+            </CardActions>
+          </form>
+        </Card>
+      </Box>
     </Container>
   );
 };

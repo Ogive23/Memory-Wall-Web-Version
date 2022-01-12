@@ -1,6 +1,6 @@
 import "./App.css";
 import "./CSS/App.css";
-import CustomNavbar from "./Components/CustomNavbar";
+import CustomNavbar from "./Components/Navbar/CustomNavbar";
 import FloatingActionButton from "./Components/FloatingActionButton";
 import HomePage from "./Pages/Home";
 import AddMemory from './Components/AddMemory';
@@ -13,6 +13,9 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { LandingPage } from "./Pages/Landing";
+import { AppRoutes } from "./AppRoutes";
+
 function App() {
   const accessToken = localStorage.getItem('accessToken');
 
@@ -30,21 +33,16 @@ function App() {
   }
   return (
     <Router>
-      <div className="text-right">
-        {/* <main id="main"> */}
-        <CustomNavbar />
-        {/* <LoginPage /> */}
-        {/* <HomePage /> */}
-        <FloatingActionButton />
-        {/* </main> */}
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route exact path='/' element={<HomePage />} />
-          <Route exact path='/add-memory' element={<AddMemory />} />
-        </Routes>
-
-      </div>
-    </Router >
+      {/* <div> */}
+      <CustomNavbar />
+      <FloatingActionButton />
+      <Routes>
+        <Route path={AppRoutes.Login} element={<LoginPage />} />
+        <Route exact path={AppRoutes.Landing} element={<LandingPage />} />
+        <Route exact path={AppRoutes.Home} element={<HomePage />} />
+      </Routes>
+      {/* </div> */}
+    </Router>
   );
 }
 
