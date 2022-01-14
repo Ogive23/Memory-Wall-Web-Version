@@ -32,7 +32,6 @@ import { AppRoutes } from "../AppRoutes";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
-  const [error, setError] = useState(null);
   let navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
@@ -143,7 +142,7 @@ export const LoginPage = () => {
       isLoading: true,
     });
     try {
-      let response = await axios.post("http://127.0.0.1:8000/api/login", {
+      let response = await axios.post(`${BASE_API_URL}/api/login`, {
         email: values.email,
         password: values.password,
         accessType: "Web",
@@ -283,7 +282,6 @@ export const LoginPage = () => {
                   "Sign in"
                 )}
               </Button>
-              {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
               <Link href="#" underline="none" sx={{ textAlign: "right" }}>
                 Forgot Password?
               </Link>

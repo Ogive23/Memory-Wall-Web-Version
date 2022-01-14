@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Background } from '../Components/Landing Page/Background'
 import { Footer } from '../Components/Landing Page/Footer'

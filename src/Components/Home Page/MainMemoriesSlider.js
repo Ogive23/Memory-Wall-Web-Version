@@ -36,7 +36,7 @@ export const MainMemoriesSlider = () => {
       <Container sx={{ marginTop: '10vh', }}>
         {loading && <div>Loading</div>}
         {error && <div>error</div>}
-        {!loading && memories.length == 0 && <div>Empty</div>}
+        {!loading && memories.length === 0 && <div>Empty</div>}
         <Carousel interval={100000}>
           {memories.map((memory) => {
             console.log(memory);
